@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/bootstrap.min.css">
+    <link rel="stylesheet" href="style/font.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap");
+        .table {
+	 width: 100%;
+	 border: 1px solid #eee;
+}
+.table-header {
+	 display: flex;
+	 width: 100%;
+     flex-direction: row-reverse;
+	 background: #000;
+	 padding: 18px 0;
+}
+.table-row {
+    display: flex;
+    flex-direction: row-reverse;
+	 width: 100%;
+	 padding: 18px 0;
+}
+ .table-row{
+	 background: #eee;
+}
+ .table-data, .header__item {
+	 flex: 1 1 20%;
+	 text-align: center;
+}
+ .header__item {
+	 text-transform: uppercase;
+}
+ .filter__link {
+	 color: white;
+	 text-decoration: none;
+	 position: relative;
+	 display: inline-block;
+	 padding-left: 24px;
+	 padding-right: 24px;
+}
+ .filter__link::after {
+	 content: '';
+	 position: absolute;
+	 right: -18px;
+	 color: white;
+	 font-size: 12px;
+	 top: 50%;
+	 transform: translateY(-50%);
+}
+ .filter__link.desc::after {
+	 content: '(desc)';
+}
+ .filter__link.asc::after {
+	 content: '(asc)';
+}
+ 
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            margin: 0;
+            font-family: "Josefin Sans", sans-serif;
+            direction: rtl;
+        }
+
+        .cards {}
+
+        .card {
+            --card-bg: rgba(24, 24, 24, 0.479);
+            --card-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--card-radius);
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            width: 20rem;
+            height: 420px;
+            backdrop-filter: blur(1rem);
+        }
+
+        .card-preview {
+            height: 32rem;
+            border-radius: calc(var(--card-radius) - 0.5rem);
+            overflow: hidden;
+        }
+
+        .card-preview .img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.48s ease-in-out;
+        }
+
+        .card-header,
+        .card-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-header .content {
+            display: flex;
+            flex-direction: column;
+            padding: 1.75rem 0 0 0;
+            gap: 0.5rem;
+        }
+
+        .card-footer {
+            justify-content: flex-end;
+        }
+
+        .title {
+            font-size: 1.75rem;
+            font-weight: bolder;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+        }
+
+
+        .card-preview:hover img {
+            transform: scale(1.25);
+        }
+
+
+        .card p {
+            color: rgb(255, 255, 255);
+            padding: 1.5rem 0;
+        }
+
+        .card a {
+            color: aquamarine;
+        }
+
+        .aside {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            background-color: black;
+        }
+
+        .links {}
+
+        .links a {
+            background-color: rgb(22, 22, 22);
+            padding: 10px 15px;
+            transition: .5s ease-in;
+        }
+
+        .links a:hover {
+            background-color: rgb(0, 0, 0);
+            padding: 10px 15px;
+            text-decoration: none;
+            color: gray;
+        }
+
+        .main {
+            position: relative;
+
+        }
+
+        /* statistic */
+        .progress-pie-chart {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #e5e5e5;
+            position: relative;
+        }
+
+        .progress-pie-chart.gt-50 {
+            background-color: #81ce97;
+        }
+
+        .ppc-progress {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - 100px);
+            top: calc(50% - 100px);
+            width: 200px;
+            height: 200px;
+            clip: rect(0, 200px, 200px 100px);
+        }
+
+        .ppc-progress .ppc-progress-fill {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - 100px);
+            top: calc(50% - 100px);
+            width: 200px;
+            height: 200px;
+            clip: rect(0 100px200px, 0);
+            background: #81ce97;
+            transform: rotate(60deg);
+        }
+
+        .gt-50 .ppc-progress {
+            clip: rect(0 100px200px, 0);
+        }
+
+        .gt-50 .ppc-progress .ppc-progress-fill {
+            clip: rect(0, 200px, 200px 100px);
+            background: #e5e5e5;
+        }
+
+        .ppc-percents {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - 173.9130434783px/2);
+            top: calc(50% - 173.9130434783px/2);
+            width: 173.9130434783px;
+            height: 173.9130434783px;
+            background: #fff;
+            text-align: center;
+            display: table;
+        }
+
+        .ppc-percents span {
+            display: block;
+            font-size: 2.6em;
+            font-weight: bold;
+            color: #81ce97;
+        }
+
+        .pcc-percents-wrapper {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .progress-pie-chart {
+            margin: 50px auto 0;
+        }
+
+        .logo {
+            background: linear-gradient(to bottom, black, rgb(37, 37, 37));
+            padding: 50px 0;
+        }
+
+        .form-container {
+            background-color: #fff;
+            font-family: 'Titillium Web', sans-serif;
+            font-size: 0;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 0 25px -15px rgba(0, 0, 0, 0.3);
+        }
+
+        .form-container .title {
+            color: #000;
+            font-size: 25px;
+            font-weight: 600;
+            text-transform: capitalize;
+            margin: 0 0 25px;
+        }
+
+        .form-container .title:after {
+            content: '';
+            background-color: rgba(0, 0, 0, 0.852);
+            height: 3px;
+            position: relative;
+            right: 85.3%;
+            width: 180px;
+            margin: 10px 0 0;
+            display: block;
+            clear: both;
+        }
+
+        .form-container .sub-title {
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+            text-align: center;
+            text-transform: uppercase;
+            margin: 0 0 20px;
+        }
+
+        .form-container {
+            font-size: 0;
+        }
+
+        .form-container .form-group {
+            color: #333;
+            width: 50%;
+            padding: 0 8px;
+            margin: 0 0 15px;
+            display: inline-block;
+        }
+
+        .form-container .form-group:nth-child(4) {
+            margin-bottom: 30px;
+        }
+
+        .form-container .form-group label {
+            font-size: 17px;
+            font-weight: 600;
+        }
+
+        .form-container .form-control {
+            color: #888;
+            background: #fff;
+            font-weight: 400;
+            letter-spacing: 1px;
+            height: 40px;
+            padding: 6px 12px;
+            border-radius: 10px;
+            border: 2px solid #e7e7e7;
+            box-shadow: none;
+        }
+
+        .form-container .form-control:focus {
+            box-shadow: 0 0 5px #dcdcdc;
+        }
+
+        .form-container .check-terms {
+            padding: 0 8px;
+            margin: 0 0 25px;
+        }
+
+        .form-container .check-terms .check-label {
+            color: #333;
+            font-size: 14px;
+            font-weight: 500;
+            font-style: italic;
+            vertical-align: top;
+            display: inline-block;
+        }
+
+        .form-container .check-terms .checkbox {
+            height: 17px;
+            width: 17px;
+            min-height: auto;
+            margin: 2px 8px 0 0;
+            border: 2px solid #d9d9d9;
+            border-radius: 2px;
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            transition: all 0.3s ease 0s;
+        }
+
+        .form-container .check-terms .checkbox:before {
+            content: '';
+            height: 5px;
+            width: 9px;
+            border-bottom: 2px solid #00A9EF;
+            border-left: 2px solid #00A9EF;
+            transform: rotate(-45deg);
+            position: absolute;
+            left: 2px;
+            top: 2.5px;
+            transition: all 0.3s ease;
+        }
+
+        .form-container .check-terms .checkbox:checked:before {
+            opacity: 1;
+        }
+
+        .form-container .check-terms .checkbox:not(:checked):before {
+            opacity: 0;
+        }
+
+        .form-container .check-terms .checkbox:focus {
+            outline: none;
+        }
+
+        .form-container .signin-link {
+            color: #333;
+            font-size: 14px;
+            width: calc(100% - 190px);
+            margin-right: 30px;
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .form-container .signin-link a {
+            color: #00A9EF;
+            font-weight: 600;
+            transition: all 0.3s ease 0s;
+        }
+
+        .form-container .signin-link a:hover {
+            text-decoration: underline;
+        }
+
+        .signup {
+            color: #fff;
+            background: rgba(0, 0, 0, 0.852);
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 160px;
+            padding: 15px 29px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+            transition: all 0.3s ease 0s;
+        }
+
+        .form-container .btn:hover,
+        .form-container .btn:focus {
+            text-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+            box-shadow: 3px 3px rgba(0, 0, 0, 0.15), 5px 5px rgba(0, 0, 0, 0.1);
+            outline: none;
+            color: rgb(152, 152, 152);
+
+        }
+
+        @media only screen and (max-width:479px) {
+            .form-container .form-group {
+                width: 100%;
+            }
+
+            .form-container .signin-link {
+                width: 100%;
+                margin: 0 10px 15px;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-dark">
+    <main class="col-lg-12 d-flex justify-content-between align-items-center p-0 overflow-hidden">
+   <div class="col-lg-2 aside m-0 pb-5 px-0">
+          
+<div class="logo">
+                <h1 class="text-white text-center">Library</h1>
+            </div>
+            <div class="links mt-5 d-flex flex-column">
+                <a href="index.html" class="my-1 text-white text-left">Main Page</a>
+                <a href="addstd.html" class="my-1 text-white text-left">Add Student</a>
+                <a href="showstd.html" class="my-1 text-white text-left">Show Student</a>
+                <a href="add-doctor.html" class="my-1 text-white text-left">Add Doctor</a>
+                <a href="showdoctors.html" class="my-1 text-white text-left">Show Doctor</a>
+                <a href="addBook.html" class="my-1 text-white text-left">Add Book</a>
+                <a href="showBook.html" class="my-1 text-white text-left">Show Book</a>
+                <a href="addEmployee.html" class="my-1 text-white text-left">Add Employee</a>
+                <a href="showemployee.html" class="my-1 text-white text-left">Show Employee</a>
+                <a href="login.html" class="my-1 text-white text-left">Logout</a>
+            </div>
+        </div>
+        <div class="col-lg-10 mt-5  main">
+            <div class="container">
+	
+                <div class="table">
+                    <div class="table-header">
+                        <div class="header__item"><a id="name" class="filter__link" href="#">Name</a></div>
+                        <div class="header__item"><a id="wins" class="filter__link filter__link--number" href="#">Library</a></div>
+                        <div class="header__item"><a id="draws" class="filter__link filter__link--number" href="#">Jop Title</a></div>
+                    </div>
+                    <div class="table-content">	
+                        <div class="table-row">		
+                            <div class="table-data">Tom</div>
+                            <div class="table-data">2</div>
+                            <div class="table-data">0</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-data">Dick</div>
+                            <div class="table-data">1</div>
+                            <div class="table-data">1</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-data">Harry</div>
+                            <div class="table-data">0</div>
+                            <div class="table-data">2</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-data">Harry</div>
+                            <div class="table-data">0</div>
+                            <div class="table-data">2</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-data">Harry</div>
+                            <div class="table-data">0</div>
+                            <div class="table-data">2</div>
+                        </div>
+                        <div class="table-row">
+                            <div class="table-data">Harry</div>
+                            <div class="table-data">0</div>
+                            <div class="table-data">2</div>
+                        </div>
+                    </div>	
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script src="javas/bootstrap.min.js"></script>
+    <script src="javas/jquery-3.6.0.min.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,15 @@
+body{
+    height: 100vh;
+}
+input{
+    margin: 0px !important;
+}
+button{
+    margin: 10px 0 !important;
+}
+.but{
+    margin-top: 30px;
+}
+a{
+    letter-spacing: 2px;
+}

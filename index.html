@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style/bootstrap.min.css">
+    <link rel="stylesheet" href="style/font.css">
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap");
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            margin: 0;
+            font-family: "Josefin Sans", sans-serif;
+            direction: rtl;
+        }
+
+        .cards {}
+
+        .card {
+            --card-bg: rgba(24, 24, 24, 0.479);
+            --card-radius: 1rem;
+            display: flex;
+            flex-direction: column;
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--card-radius);
+            color: rgb(255, 255, 255);
+            cursor: pointer;
+            width: 20rem;
+            height: 420px;
+            backdrop-filter: blur(1rem);
+        }
+
+        .card-preview {
+            height: 32rem;
+            border-radius: calc(var(--card-radius) - 0.5rem);
+            overflow: hidden;
+        }
+
+        .card-preview .img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+            transition: transform 0.48s ease-in-out;
+        }
+
+        .card-header,
+        .card-footer {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-header .content {
+            display: flex;
+            flex-direction: column;
+            padding: 1.75rem 0 0 0;
+            gap: 0.5rem;
+        }
+
+        .card-footer {
+            justify-content: flex-end;
+        }
+
+        .title {
+            font-size: 1.75rem;
+            font-weight: bolder;
+        }
+
+        .subtitle {
+            font-size: 1rem;
+        }
+
+
+        .card-preview:hover img {
+            transform: scale(1.25);
+        }
+
+
+        .card p {
+            color: rgb(255, 255, 255);
+            padding: 1.5rem 0;
+        }
+
+        .card a {
+            color: aquamarine;
+        }
+
+        .aside {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            background-color: black;
+        }
+
+        .links {}
+
+        .links a {
+            background-color: rgb(22, 22, 22);
+            padding: 10px 15px;
+            transition: .5s ease-in;
+        }
+
+        .links a:hover {
+            background-color: rgb(0, 0, 0);
+            padding: 10px 15px;
+            text-decoration: none;
+            color: gray;
+        }
+
+        .main {
+            position: relative;
+
+        }
+
+        /* statistic */
+        .progress-pie-chart {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: #e5e5e5;
+            position: relative;
+        }
+
+        .progress-pie-chart.gt-50 {
+            background-color: #81ce97;
+        }
+
+        .ppc-progress {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - 100px);
+            top: calc(50% - 100px);
+            width: 200px;
+            height: 200px;
+            clip: rect(0, 200px, 200px 100px);
+        }
+
+        .ppc-progress .ppc-progress-fill {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - 100px);
+            top: calc(50% - 100px);
+            width: 200px;
+            height: 200px;
+            clip: rect(0 100px200px, 0);
+            background: #81ce97;
+            transform: rotate(60deg);
+        }
+
+        .gt-50 .ppc-progress {
+            clip: rect(0 100px200px, 0);
+        }
+
+        .gt-50 .ppc-progress .ppc-progress-fill {
+            clip: rect(0, 200px, 200px 100px);
+            background: #e5e5e5;
+        }
+
+        .ppc-percents {
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: calc(50% - 173.9130434783px/2);
+            top: calc(50% - 173.9130434783px/2);
+            width: 173.9130434783px;
+            height: 173.9130434783px;
+            background: #fff;
+            text-align: center;
+            display: table;
+        }
+
+        .ppc-percents span {
+            display: block;
+            font-size: 2.6em;
+            font-weight: bold;
+            color: #81ce97;
+        }
+
+        .pcc-percents-wrapper {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .progress-pie-chart {
+            margin: 50px auto 0;
+        }
+
+        .logo {
+            background: linear-gradient(to bottom, black, rgb(37, 37, 37));
+            padding: 50px 0;
+        }
+        .top_head{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 60px;
+            background-color: black;
+            right: 0;
+        }
+    </style>
+</head>
+
+<body class="bg-dark">
+    <main class="col-lg-12 d-flex justify-content-between align-items-center p-0 overflow-hidden">
+       
+        <div class="col-lg-2 aside m-0 pb-5 px-0">
+
+            <div class="logo">
+                <h1 class="text-white text-center">Library</h1>
+            </div>
+
+            <div class="links mt-5 d-flex flex-column">
+                <a href="index.html" class="my-1 text-white text-left">Main Page</a>
+                <a href="addstd.html" class="my-1 text-white text-left">Add Student</a>
+                <a href="showstd.html" class="my-1 text-white text-left">Show Student</a>
+                <a href="add-doctor.html" class="my-1 text-white text-left">Add Doctor</a>
+                <a href="showdoctors.html" class="my-1 text-white text-left">Show Doctor</a>
+                <a href="addBook.html" class="my-1 text-white text-left">Add Book</a>
+                <a href="showBook.html" class="my-1 text-white text-left">Show Book</a>
+                <a href="addEmployee.html" class="my-1 text-white text-left">Add Employee</a>
+                <a href="showemployee.html" class="my-1 text-white text-left">Show Employee</a>
+                <a href="login.html" class="my-1 text-white text-left">Logout</a>
+            </div>
+        </div>
+        <div class="col-lg-10 p-0 main">
+            <div class="top_head">
+
+            </div>
+            <div class="container" style="margin: 80px;">
+                <h2 class="text-white text-right">Most Requested</h2>
+                <div>
+                    <img src="loupe.png" width="20px"  class="overflow-visible position-absolute m-1">
+                    <input type="search" placeholder="search"  class="search text-left mb-2" >
+                </div>
+                <div class="cards d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="card my-4">
+                        <div class="card-preview">
+                            <img class="img" src="history_featured.jpg">
+                        </div>
+                        <div class="card-header d-flex justify-content-end">
+                            <div class="content">
+                                <div class="title text-left">Book Name</div>
+                                <span class="subtitle">author</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card my-4">
+                        <div class="card-preview">
+                            <img class="img" src="history_featured.jpg">
+                        </div>
+                        <div class="card-header d-flex justify-content-end">
+                            <div class="content">
+                                <div class="title text-left">Book Name</div>
+                                <span class="subtitle">author</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card my-4">
+                        <div class="card-preview">
+                            <img class="img" src="history_featured.jpg">
+                        </div>
+                        <div class="card-header d-flex justify-content-end">
+                            <div class="content">
+                                <div class="title text-left">Book Name</div>
+                                <span class="subtitle">author</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card my-4">
+                        <div class="card-preview">
+                            <img class="img" src="history_featured.jpg">
+                        </div>
+                        <div class="card-header d-flex justify-content-end">
+                            <div class="content">
+                                <div class="title text-left">Book Name</div>
+                                <span class="subtitle">author</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card my-4">
+                        <div class="card-preview">
+                            <img class="img" src="history_featured.jpg">
+                        </div>
+                        <div class="card-header d-flex justify-content-end">
+                            <div class="content">
+                                <div class="title text-left">Book Name</div>
+                                <span class="subtitle">author</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card my-4">
+                        <div class="card-preview">
+                            <img class="img" src="history_featured.jpg">
+                        </div>
+                        <div class="card-header d-flex justify-content-end">
+                            <div class="content">
+                                <div class="title text-left">Book Name</div>
+                                <span class="subtitle">author</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="statistic my-5">
+                    <h2 class="text-white text-right">إحصائيات</h2>
+
+                    <div class="cards_  d-flex justify-content-between align-items-center">
+                        <div class="_card_">
+                            <div class="progress-pie-chart" data-percent="46">
+                                <div class="ppc-progress">
+                                    <div class="ppc-progress-fill"></div>
+                                </div>
+                                <div class="ppc-percents">
+                                    <div class="pcc-percents-wrapper">
+                                        <span>50%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="text-white text-center my-3">الكتب المستعارة</h5>
+                        </div>
+                        <div class="_card_">
+                            <div class="progress-pie-chart" data-percent="50">
+                                <div class="ppc-progress">
+                                    <div class="ppc-progress-fill"></div>
+                                </div>
+                                <div class="ppc-percents">
+                                    <div class="pcc-percents-wrapper">
+                                        <span>50%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="text-white text-center my-3">الكتب المتاحة</h5>
+                        </div>
+                        <div class="_card_">
+                            <div class="progress-pie-chart" data-percent="40">
+                                <div class="ppc-progress">
+                                    <div class="ppc-progress-fill"></div>
+                                </div>
+                                <div class="ppc-percents">
+                                    <div class="pcc-percents-wrapper">
+                                        <span>60%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="text-white text-center my-3">عدد الطلاب</h5>
+                        </div>
+                        <div class="_card_">
+                            <div class="progress-pie-chart" data-percent="60">
+                                <div class="ppc-progress">
+                                    <div class="ppc-progress-fill"></div>
+                                </div>
+                                <div class="ppc-percents">
+                                    <div class="pcc-percents-wrapper">
+                                        <span>76%</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <h5 class="text-white text-center my-3">عدد الدكاترة</h5>
+                        </div>
+
+                    </div>
+                </div>
+
+                <h2 class="text-white text-right">الكتب المتاحة</h2>
+                <div class="cards d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="card my-4">
+                        <div class="card-preview">
+                            <img class="img" src="history_featured.jpg">
+                        </div>
+                        <div class="card-header d-flex justify-content-end">
+                            <div class="content">
+                                <div class="title text-left">Book Name</div>
+                                <span class="subtitle">author</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card my-4">
+                        <div class="card-preview">
+                            <img class="img" src="history_featured.jpg">
+                        </div>
+                        <div class="card-header d-flex justify-content-end">
+                            <div class="content">
+                                <div class="title text-left">Book Name</div>
+                                <span class="subtitle">author</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card my-4">
+                        <div class="card-preview">
+                            <img class="img" src="history_featured.jpg">
+                        </div>
+                        <div class="card-header d-flex justify-content-end">
+                            <div class="content">
+                                <div class="title text-left">Book Name</div>
+                                <span class="subtitle">author</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card my-4">
+                        <div class="card-preview">
+                            <img class="img" src="history_featured.jpg">
+                        </div>
+                        <div class="card-header d-flex justify-content-end">
+                            <div class="content">
+                                <div class="title text-left">Book Name</div>
+                                <span class="subtitle">author</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card my-4">
+                        <div class="card-preview">
+                            <img class="img" src="history_featured.jpg">
+                        </div>
+                        <div class="card-header d-flex justify-content-end">
+                            <div class="content">
+                                <div class="title text-left">Book Name</div>
+                                <span class="subtitle">author</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card my-4">
+                        <div class="card-preview">
+                            <img class="img" src="history_featured.jpg">
+                        </div>
+                        <div class="card-header d-flex justify-content-end">
+                            <div class="content">
+                                <div class="title text-left">Book Name</div>
+                                <span class="subtitle">author</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+    <script src="Book Names/bootstrap.min.js"></script>
+    <script src="Book Names/jquery-3.6.0.min.js"></script>
+    <script>
+
+    </script>
+</body>
+
+</html>
